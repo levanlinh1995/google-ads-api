@@ -1,0 +1,29 @@
+<script>
+// import ComponentA from './ComponentA.vue'
+
+export default {
+  components: {
+    // ComponentA
+  }
+}
+</script>
+
+<template>
+    <v-container>
+        <v-icon icon="$vuetify"></v-icon>
+        <v-row justify="center" align="center">
+        <v-col cols="auto">
+            <v-btn density="compact">Compact Button</v-btn>
+        </v-col>
+
+        <v-col cols="auto">
+            <v-btn density="comfortable">Comfortable Button</v-btn>
+        </v-col>
+
+        <v-col cols="auto">
+            <v-btn density="default">Default Button</v-btn>
+        </v-col>
+        </v-row>
+    </v-container>
+
+</template>

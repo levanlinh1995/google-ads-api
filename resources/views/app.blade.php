@@ -7,9 +7,7 @@
         <title>Google Ads API</title>
     </head>
     <body>
-        <div id="app">
-            <h1>hello</h1>
-        </div>
+        <div id="app"></div>
 
         @vite('resources/js/app.js')
     </body>
