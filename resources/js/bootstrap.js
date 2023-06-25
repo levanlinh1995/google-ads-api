@@ -4,9 +4,23 @@
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-import axios from 'axios';
-window.axios = axios;
+import Axios from 'axios';
 
+const axios = Axios.create({
+    baseURL: import.meta.env.VITE_API_URL,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      responseType: "json",
+    },
+  });
+
+const token = localStorage.getItem('accessToken');
+if (token) {
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+}
+
+window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**

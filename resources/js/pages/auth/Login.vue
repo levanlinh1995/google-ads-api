@@ -1,32 +1,39 @@
 <template>
-  <h1>Login Page</h1>
-  <div>
-    <v-btn :href="googleOauthUrl">
-      Sign in with Google
-    </v-btn>
-  </div>
-    
-    
-  </template>
+    <h1>
+        Login Page</h1>
+    <div>
+        <v-btn :href="googleOauthUrl">
+            Sign in with Google
+        </v-btn>
+    </div>
+</template>
   
-  <script>
-  export default {
+<script>
+import { mapActions } from 'vuex'
+
+export default {
     data() {
         return {
-          googleOauthUrl: '',
+            googleOauthUrl: '',
         };
     },
     created() {
         this.fetchData();
     },
     methods: {
+        ...mapActions('auth',[
+          'getGoogleOauthUrl',
+        ]),
         fetchData() {
-            axios
-                .get('/api/auth/google/url')
-                .then(response => {
-                    this.googleOauthUrl = response.data.url
-                });
+          this.getGoogleOauthUrl()
+                .then(url => {
+                    this.googleOauthUrl = url
+                }).catch(
+                    (error) => {
+                        // todo
+                    }
+                )
         }
     }
-  }
-  </script>
+}
+</script>

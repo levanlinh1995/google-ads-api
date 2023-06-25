@@ -2,6 +2,8 @@
 </template>
     
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     data() {
         return {
@@ -11,12 +13,13 @@ export default {
         this.callbackGoogle();
     },
     methods: {
+        ...mapActions('auth',[
+          'googleLogin',
+        ]),
         callbackGoogle() {
             const queryString = '?' + new URLSearchParams(this.$route.query).toString();
-            axios
-                .get(`/api/auth/google/callback${queryString}`)
+            this.googleLogin(queryString)
                 .then(response => {
-                    this.googleOauthUrl = response.data.url
                     this.$router.push({ name: 'home' })
                 }).catch(
                     (error) => {

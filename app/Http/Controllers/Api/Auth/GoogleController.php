@@ -40,7 +40,7 @@ class GoogleController extends Controller
         });
 
         return Response::json([
-            'token' => $user->createToken("login_token")->plainTextToken,
+            'accessToken' => $user->createToken("login_token")->plainTextToken,
             'user' => new UserResource($user),
         ]);
     }

@@ -28,8 +28,24 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+    history: createWebHistory(),
+    routes,
 })
+
+router.beforeEach(async (to, from) => {
+    const isAuthenticated = localStorage.getItem('accessToken');
+    const publicPages = ['login', 'callback_google'];
+    const authRequired = !publicPages.includes(to.name);
+
+    if (
+        !isAuthenticated && authRequired
+    ) {
+        return { name: 'login' }
+    }
+
+    if (isAuthenticated && to.name === 'login') {
+        return { name: 'home' }
+    }
+});
 
 export default router;
