@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 const Home = () => import('@/pages/dashboard/Home.vue')
 const Login = () => import('@/pages/auth/Login.vue')
+const CallBackGoogle = () => import('@/pages/auth/CallbackGoogle.vue')
 
 const routes = [
     {
@@ -15,9 +16,14 @@ const routes = [
         component: Home
     },
     {
-        path: '/login',
+        path: '/auth/login',
         name: 'login',
         component: Login
+    },
+    {
+        path: '/auth/callback/google',
+        name: 'callback_google',
+        component: CallBackGoogle
     },
 ]
 

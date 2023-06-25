@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Auth\GoogleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('auth/google/url', 'Api\Auth\GoogleController@loginUrl');
-Route::get('auth/google/callback', 'Api\Auth\GoogleController@loginCallback');
+Route::get('auth/google/url', [GoogleController::class, 'loginUrl']);
+Route::get('auth/google/callback', [GoogleController::class, 'loginCallback']);
+
+// Route::apiResource('posts', PostController::class)->middleware('auth:sanctum');
+
 

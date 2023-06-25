@@ -16,8 +16,6 @@
   
 <script>
 export default {
-  watch: {
-
-  },
-};
+  
+}
 </script>
