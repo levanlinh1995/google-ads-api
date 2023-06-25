@@ -1,9 +1,10 @@
 import './bootstrap';
 import '../css/app.css'; 
 
-import {createApp} from 'vue'
+import { createApp } from 'vue'
+import router from './route/router';
+import App from './layouts/App.vue';
 
-import App from '@/components/App.vue'
 
 // Vuetify
 import 'vuetify/styles'
@@ -18,5 +19,6 @@ const vuetify = createVuetify({
 })
 
 createApp(App)
-    .use(vuetify)
-    .mount("#app")
+  .use(router)
+  .use(vuetify)
+  .mount("#app")  
