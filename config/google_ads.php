@@ -1,7 +1,7 @@
 <?php
 return [
     'developerToken' => env('GOOGLE_ADS_DEVELOPER_TOKEN', ''),
-    'clientCustomerId' => "CLIENT-CUSTOMER-ID",
+    'clientCustomerId' => env('GOOGLE_ADS_CLIENT_CUSTOMER_ID', ''),
     'clientId' => env('GOOGLE_CLIENT_ID', ''),
     'clientSecret' => env('GOOGLE_CLIENT_SECRET', ''),
     'refreshToken' => env('GOOGLE_ADS_REFRESH_TOKEN', ''),

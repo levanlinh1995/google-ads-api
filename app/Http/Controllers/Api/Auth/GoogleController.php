@@ -92,7 +92,10 @@ class GoogleController extends Controller
         $authToken = $oauth2->fetchAuthToken();
 
         $refreshToken = $authToken['refresh_token'];
-        config('google_ads.refreshToken', $refreshToken);
+
+        $user = auth()->user();
+        $user->gg_ads_refreshtoken = $refreshToken;
+        $user->save();
 
         return Response::json([
             'success' => true

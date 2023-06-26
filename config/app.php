@@ -159,6 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
+        App\Providers\GoogleAdsServiceProvider::class,
 
         /*
          * Application Service Providers...
