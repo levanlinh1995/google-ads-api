@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\GoogleController;
+use App\Http\Controllers\Api\Campaign\CampaignController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +16,15 @@ use App\Http\Controllers\Api\Auth\GoogleController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::get('auth/google/url', [GoogleController::class, 'loginUrl']);
 Route::get('auth/google/callback', [GoogleController::class, 'loginCallback']);
 
-// Route::apiResource('posts', PostController::class)->middleware('auth:sanctum');
+// for google ads
+Route::get('auth/google-ads-login-url', [GoogleController::class, 'getGoogleAdsLoginUrl'])->middleware(['auth:sanctum']);
+Route::get('auth/generate-google-ads-refresh-token', [GoogleController::class, 'generateGoogleAdsRefreshToken'])->middleware(['auth:sanctum']);
 
 
+Route::prefix('campaigns')->middleware(['auth:sanctum'])->group(function () {
+    Route::get('/', [CampaignController::class, 'index']);
+    Route::post('/store', [CampaignController::class, 'store']);
+});

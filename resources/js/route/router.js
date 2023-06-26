@@ -4,6 +4,10 @@ import { createRouter, createWebHistory } from 'vue-router';
 const Home = () => import('@/pages/dashboard/Home.vue')
 const Login = () => import('@/pages/auth/Login.vue')
 const CallBackGoogle = () => import('@/pages/auth/CallbackGoogle.vue')
+const LinkGoogleAds = () => import('@/pages/auth/LinkGoogleAds.vue')
+const CallBackGoogleAds = () => import('@/pages/auth/CallBackGoogleAds.vue')
+const CampaignList = () => import('@/pages/campaigns/CampaignList.vue')
+const NewCampaign = () => import('@/pages/campaigns/NewCampaign.vue')
 
 const routes = [
     {
@@ -11,12 +15,12 @@ const routes = [
         component: Home
     },
     {
-        path: '/home',
+        path: '/dashboard',
         name: 'home',
         component: Home
     },
     {
-        path: '/auth/login',
+        path: '/auth/google-login',
         name: 'login',
         component: Login
     },
@@ -24,6 +28,26 @@ const routes = [
         path: '/auth/callback/google',
         name: 'callback_google',
         component: CallBackGoogle
+    },
+    {
+        path: '/auth/link-google-ads',
+        name: 'link_google_ads',
+        component: LinkGoogleAds
+    },
+    {
+        path: '/auth/callback/googleads',
+        name: 'callback_google_ads',
+        component: CallBackGoogleAds
+    },
+    {
+        path: '/campaign/list',
+        name: 'campaign_list',
+        component: CampaignList
+    },
+    {
+        path: '/campaign/new',
+        name: 'campaign_new',
+        component: NewCampaign
     },
 ]
 

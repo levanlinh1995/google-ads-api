@@ -10,20 +10,20 @@ export default {
         };
     },
     created() {
-        this.callbackGoogle();
+        this.callbackGoogleAds();
     },
     methods: {
         ...mapActions('auth',[
-          'loginGoogle',
+          'generateGoogleAdsRefreshToken',
         ]),
-        callbackGoogle() {
-            const queryString = '?' + new URLSearchParams(this.$route.query).toString();
-            this.loginGoogle(queryString)
+        callbackGoogleAds() {
+            const code = this.$route.query.code;
+            this.generateGoogleAdsRefreshToken(code)
                 .then(response => {
-                    this.$router.push({ name: 'link_google_ads' })
+                    this.$router.push({ name: 'home' })
                 }).catch(
                     (error) => {
-                        console.log('Auth failed.')
+                        console.log('Google Ads Auth failed.')
                         this.$router.push({ name: 'login' })
                     }
                 )

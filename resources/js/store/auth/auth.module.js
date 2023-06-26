@@ -10,6 +10,11 @@ const initialState = token
 const auth = {
   namespaced: true,
   state: initialState,
+  getters: {
+    isLoggedIn(state) {
+      return state.status.loggedIn;
+    }
+  },
   actions: {
     getGoogleOauthUrl() {
       return AuthService.getGoogleOauthUrl().then(
@@ -21,14 +26,34 @@ const auth = {
         }
       );
     },
-    googleLogin({ commit }, queryString) {
-      return AuthService.getGoogleOauthCallback(queryString).then(
+    loginGoogle({ commit }, queryString) {
+      return AuthService.loginGoogle(queryString).then(
         data => {
           commit('loginSuccess', { user: data.user, token: data.accessToken });
           return Promise.resolve(data);
         },
         error => {
           commit('loginFailure');
+          return Promise.reject(error);
+        }
+      );
+    },
+    getGoogleAdsLoginUrl() {
+      return AuthService.getGoogleAdsLoginUrl().then(
+        url => {
+          return Promise.resolve(url);
+        },
+        error => {
+          return Promise.reject(error);
+        }
+      );
+    },
+    generateGoogleAdsRefreshToken({ commit }, token) {
+      return AuthService.generateGoogleAdsRefreshToken(token).then(
+        data => {
+          return Promise.resolve(data);
+        },
+        error => {
           return Promise.reject(error);
         }
       );
