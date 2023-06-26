@@ -1,14 +1,22 @@
 <template>
-    <div>
-        <h1>List campaign</h1>
-        <div>
-            <v-btn @click="onNavigateToCampaignNew">
-                Create new campaign
-            </v-btn>
-        </div>
-        <div>
-    
-        </div>
+    <div class="mt-10">
+        <v-card class="mx-auto" max-width="800" variant="outlined">
+            <v-card-item>
+                <div>
+                    <div class="text-h6 mb-1">
+                        Campaign List
+                    </div>
+                    <div class="mt-3 text-right">
+                        <v-btn @click="onNavigateToCampaignNew" color="indigo-darken-3">
+                            Create new campaign
+                        </v-btn>
+                    </div>
+                    <div>
+                        <!-- /todo -->
+                    </div>
+                </div>
+            </v-card-item>
+        </v-card>
     </div>
 </template>
     

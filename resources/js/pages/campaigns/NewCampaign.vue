@@ -1,10 +1,22 @@
 <template>
-    <h1>Create new campaign</h1>
-    <div>
-        to do
-        <v-btn @click="onCreateNew">
-            Create new campaign
-        </v-btn>
+    <div class="mt-10">
+        <v-card class="mx-auto" max-width="800" variant="outlined">
+            <v-card-item>
+                <div>
+                    <div class="text-h6 mb-1">
+                        Create New Campaign
+                    </div>
+                    <div class="mt-3 text-right">
+                        <v-btn @click="onCreateNew" color="indigo-darken-3">
+                            Submit
+                        </v-btn>
+                    </div>
+                    <div>
+                        <!-- /todo -->
+                    </div>
+                </div>
+            </v-card-item>
+        </v-card>
     </div>
 </template>
   

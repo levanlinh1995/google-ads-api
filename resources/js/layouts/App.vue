@@ -1,31 +1,30 @@
 <template>
-  <div>
-    <div v-if="!isLoggedIn">
-      <router-link class="" :to="{ name: 'login' }">
-        Login
-      </router-link>
+    <div>
+        <v-container class="mb-6">
+            <v-row align="start" no-gutters style="height: 150px;">
+                <v-col>
+                    <div>
+                        <h1 class="text-center">Welcome to Google Ads Management</h1>
+                        <h5 class="text-center">Helping you manage your campaign</h5>
+                    </div>
+                    <div class="container">
+                        <router-view></router-view>
+                    </div>
+                </v-col>
+            </v-row>
+        </v-container>
     </div>
-    <div v-else>
-      <router-link :to="{ name: 'home' }" class="">Dashboard</router-link>
-    </div>
-
-    <div class="nav"></div>
-
-    <div class="container">
-      <router-view></router-view>
-    </div>
-  </div>
 </template>
   
 <script>
 import { mapGetters } from 'vuex'
 
 export default {
-  computed: {
-    ...mapGetters('auth',[
-      'isLoggedIn',
-    ]),
-  }
-  
+    computed: {
+        ...mapGetters('auth', [
+            'isLoggedIn',
+        ]),
+    }
+
 }
 </script>

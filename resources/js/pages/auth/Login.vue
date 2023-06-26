@@ -1,10 +1,19 @@
 <template>
-    <h1>
-        Login Page</h1>
-    <div>
-        <v-btn :href="googleOauthUrl">
-            Sign in with Google
-        </v-btn>
+    <div class="mt-10">
+        <v-card class="mx-auto" max-width="344" variant="outlined">
+            <v-card-item>
+                <div>
+                    <div class="text-h6 mb-1">
+                        Google Login
+                    </div>
+                    <div class="text-center mt-4">
+                        <v-btn :href="googleOauthUrl" block color="indigo-darken-3">
+                            Sign in with Google
+                        </v-btn>
+                    </div>
+                </div>
+            </v-card-item>
+        </v-card>
     </div>
 </template>
   
@@ -21,11 +30,11 @@ export default {
         this.fetchData();
     },
     methods: {
-        ...mapActions('auth',[
-          'getGoogleOauthUrl',
+        ...mapActions('auth', [
+            'getGoogleOauthUrl',
         ]),
         fetchData() {
-          this.getGoogleOauthUrl()
+            this.getGoogleOauthUrl()
                 .then(url => {
                     this.googleOauthUrl = url
                 }).catch(

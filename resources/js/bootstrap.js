@@ -15,10 +15,21 @@ const axios = Axios.create({
     },
   });
 
-const token = localStorage.getItem('accessToken');
-if (token) {
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-}
+// Request interceptor for API calls
+axios.interceptors.request.use(
+  async config => {
+    const token = localStorage.getItem('accessToken', '');
+    if (token) {
+      config.headers = {
+        'Authorization': `Bearer ${token}`,
+      }
+    }
+
+    return config;
+  },
+  error => {
+    Promise.reject(error)
+});
 
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
