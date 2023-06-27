@@ -11,13 +11,13 @@ class CampaignController extends Controller
 {
     public function index(CampaignService $campaignService)
     {
-        $customerId= 4213717333;
+        $customerId= config('google_ads.customerId');
         return $campaignService->list($customerId);
     }
 
     public function detail($campaignId, CampaignService $campaignService)
     {
-        $customerId= 4213717333;
+        $customerId= config('google_ads.customerId');
         return $campaignService->detail($customerId, $campaignId);
     }
 
@@ -29,14 +29,13 @@ class CampaignController extends Controller
 
     public function update($campaignId, CampaignService $campaignService, Request $request)
     {
-        $customerId= 4213717333;
         $paramData = $request->all();
         return $campaignService->update($campaignId, $paramData);
     }
 
     public function delete($campaignId, CampaignService $campaignService)
     {
-        $customerId= 4213717333;
+        $customerId= config('google_ads.customerId');
         return $campaignService->delete($customerId, (int) $campaignId);
     }
 }

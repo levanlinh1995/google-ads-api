@@ -31,9 +31,9 @@ class AdsService {
             })
     }
   
-    delete(adsId) {
+    delete({adGroupId, adId}) {
       return axios
-          .post(`ads/delete/${adsId}`)
+          .post(`ads/delete/${adGroupId}/${adId}`)
             .then(response => {
                 return response.data
             })

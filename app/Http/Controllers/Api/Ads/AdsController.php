@@ -10,31 +10,33 @@ class AdsController
 {
     public function index(AdsService $adsService)
     {
-        $customerId = 4213717333;
-        $adGroupId = 150503835053;
-        return $adsService->list($customerId, $adGroupId);
+        $customerId= config('google_ads.customerId');
+        return $adsService->list($customerId);
+    }
+
+    public function detail($adId, AdsService $adsService)
+    {
+        $customerId= config('google_ads.customerId');
+        return $adsService->detail($customerId, $adId);
     }
 
     public function store(AdsService $adsService, Request $request)
     {
-        $customerId = 4213717333;
+        $customerId= config('google_ads.customerId');
         $paramData = $request->all();
         return $adsService->store($customerId, $paramData);
-        
     }
     
-    public function update(AdsService $adsService)
+    public function update($adId, AdsService $adsService, Request $request)
     {
-        $adId = 663709731813;
-        $customerId = 4213717333;
-        return $adsService->update($customerId, $adId);
+        $paramData = $request->all();
+        $customerId= config('google_ads.customerId');
+        return $adsService->update($customerId, $adId, $paramData);
     }
 
-    public function delete(AdsService $adsService)
+    public function delete($adGroupId, $adId, AdsService $adsService)
     {
-        $adGroupId = 150503835053;
-        $adId = 663710530689;
-        $customerId = 4213717333;
+        $customerId= config('google_ads.customerId');
         return $adsService->delete($customerId, $adGroupId, $adId);
     }
 }

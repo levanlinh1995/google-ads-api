@@ -15,7 +15,7 @@ class AccessibleAccountController extends Controller
 
     public function detail(AccountService $accountService)
     {
-        $customerId = 8465198115;
+        $customerId= config('google_ads.customerId');
         return $accountService->detail($customerId);
     }
 }

@@ -79,6 +79,7 @@ class AdsGroupService extends BaseService
             FROM ad_group
             WHERE
                 ad_group.status IN ('ENABLED', 'PAUSED')
+                AND campaign.status != 'REMOVED'
             ";
             if ($campaignId !== null) {
                 $query .= " AND campaign.id = $campaignId";

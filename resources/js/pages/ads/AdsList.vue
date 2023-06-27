@@ -39,12 +39,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="item in items" :key="item.id">
+                                <tr v-for="item in items" :key="item.ad_id">
                                     <td class="overflow-y-auto">
-                                        <v-btn size="x-small" class="mr-2" @click="onDetailPage(item.id)">
+                                        <v-btn size="x-small" class="mr-2" @click="onDetailPage(item.ad_id)">
                                             Detail
                                         </v-btn>
-                                        <v-btn size="x-small" class="mr-2" @click="onEditPage(item.id)">
+                                        <v-btn size="x-small" class="mr-2" @click="onEditPage(item.ad_id)">
                                             Edit
                                         </v-btn>
                                         <v-btn size="x-small" @click="onDelete(item)">
@@ -55,7 +55,7 @@
                                     <td>{{ item.ad_group_id }} ({{ item.ad_group_name }})</td>
                                     <td>{{ item.campaign_id }} ({{ item.campaign_name }})</td>
                                     <td>{{ item.account_id }} ({{ item.account_name }})</td>
-                                    <td>{{ item.ad_group_ad_status }}</td>
+                                    <td>{{ item.ad_group_ad_status_name }}</td>
                                 </tr>
                             </tbody>
                         </v-table>
@@ -103,7 +103,7 @@ export default {
             this.$router.push({ name: 'ads_detail', params: { adsId: adsId } })
         },
         onDelete(item) {
-            this.delete(item.id)
+            this.delete({adGroupId: item.ad_group_id, adId: item.ad_id})
                 .then(data => {
                     console.log('deleted')
                     const index = this.items.indexOf(item)

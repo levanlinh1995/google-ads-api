@@ -10,10 +10,8 @@ class AdsGroupController extends Controller
 {
     public function index(AdsGroupService $adsGroupService)
     {
-        $customerId = 4213717333;
-        $campaignId = null; // optional
-        // $campaignId = 20311922291;
-        return $adsGroupService->list($customerId, $campaignId);
+        $customerId= config('google_ads.customerId');
+        return $adsGroupService->list($customerId);
     }
 
     public function store(AdsGroupService $adsGroupService, Request $request)
@@ -24,7 +22,7 @@ class AdsGroupController extends Controller
 
     public function delete($adGroupId, AdsGroupService $adsGroupService)
     {
-        $customerId = 4213717333;
+        $customerId= config('google_ads.customerId');
         return $adsGroupService->delete($customerId, $adGroupId);
     }
 }

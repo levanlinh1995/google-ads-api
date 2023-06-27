@@ -44,7 +44,7 @@ Route::prefix('ads-groups')->middleware(['auth:sanctum'])->group(function () {
 Route::prefix('ads')->middleware(['auth:sanctum'])->group(function () {
     Route::get('/', [AdsController::class, 'index']);
     Route::post('/store', [AdsController::class, 'store']);
-    Route::post('/detail/{adsId}', [AdsController::class, 'detail']);
+    Route::get('/detail/{adsId}', [AdsController::class, 'detail']);
     Route::post('/update/{adsId}', [AdsController::class, 'update']);
-    Route::post('/delete/{adsId}', [AdsController::class, 'delete']);
+    Route::post('/delete/{adsGroupId}/{adsId}', [AdsController::class, 'delete']);
 });

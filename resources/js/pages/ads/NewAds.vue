@@ -22,7 +22,7 @@
                                 <v-text-field required v-model="formData.headline3" label="Headline 3"></v-text-field>
                                 <v-text-field required v-model="formData.description1" label="Description 1"></v-text-field>
                                 <v-text-field required v-model="formData.description2" label="Description 2"></v-text-field>
-                                <v-text-field required v-model="formData.url" label="Url (http://www.example.com)"></v-text-field>
+                                <v-text-field required type="url" pattern="https://.*" size="30" v-model="formData.url" label="Url (https://www.example.com)"></v-text-field>
                                 <v-btn color="indigo-darken-3" type="submit">
                                     submit
                                 </v-btn>

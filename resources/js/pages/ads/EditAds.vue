@@ -4,7 +4,7 @@
             <v-card-item>
                 <div>
                     <div class="text-h6 mb-1">
-                        Edit Campaign #{{ $route.params.campaignId }}
+                        Edit Ad #{{ $route.params.adsId }}
                     </div>
                     <div>
                         <v-btn @click="onBack" color="grey-lighten-1">
@@ -14,13 +14,15 @@
                     <div class="mt-7">
                         <v-sheet width="400" class="mx-auto">
                             <form @submit.prevent="onSubmit">
-                                <v-text-field required type="number" v-model="formData.customerId" label="Customer ID"></v-text-field>
+                                <v-select disabled required v-model="formData.adsGroupId" item-title="ads_group_name" item-value="ads_group_id" label="Select Ad Group" :items="adsgroups"></v-select>
                                 <v-text-field required v-model="formData.name" label="Name"></v-text-field>
-                                <v-text-field required type="number" v-model="formData.budget" label="Budget"></v-text-field>
-                                <v-select disabled required v-model="formData.advertisingChannelType" item-title="name" item-value="value" label="Channel type" :items="advertisingChannelType"></v-select>
-                                <v-select required v-model="formData.status" item-title="name" item-value="value" label="Status" :items="status"></v-select>
-                                <v-text-field disabled required type="date" v-model="formData.start_date" label="Start date"></v-text-field>
-                                <v-text-field disabled required type="date" v-model="formData.end_date" label="End date"></v-text-field>
+                                <v-select disabled required v-model="formData.status" item-title="name" item-value="value" label="Status" :items="status"></v-select>
+                                <v-text-field required v-model="formData.headline1" label="Headline 1"></v-text-field>
+                                <v-text-field required v-model="formData.headline2" label="Headline 2"></v-text-field>
+                                <v-text-field required v-model="formData.headline3" label="Headline 3"></v-text-field>
+                                <v-text-field required v-model="formData.description1" label="Description 1"></v-text-field>
+                                <v-text-field required v-model="formData.description2" label="Description 2"></v-text-field>
+                                <v-text-field required type="url" pattern="https://.*" size="30" v-model="formData.url" label="Url (http://www.example.com)"></v-text-field>
                                 <v-btn color="indigo-darken-3" type="submit">
                                     submit
                                 </v-btn>
@@ -40,14 +42,15 @@ export default {
     data() {
         return {
             formData: {
-                customerId: '',
+                adsGroupId: null,
                 name: '',
-                budget: '',
-                advertisingChannelType: null,
                 status: null,
-                start_date: '',
-                end_date: '',
-                campaignBudgetId: ''
+                headline1: '',
+                headline2: '',
+                headline3: '',
+                description1: '',
+                description2: '',
+                url: '',
             },
             status: [
                 {
@@ -59,59 +62,28 @@ export default {
                     value: 3
                 }
             ],
-            advertisingChannelType: [
-                {
-                    name: 'Search',
-                    value: 2
-                },
-                // {
-                //     name: 'Display',
-                //     value: 3
-                // },
-                // {
-                //     name: 'Shopping',
-                //     value: 4
-                // }
-            ]
+            adsgroups: [],
         };
     },
     created() {
+        this.getAdsGroupList()
         this.fetchDetail()
     },
+    mounted() {
+    },
     methods: {
-        ...mapActions('campaign', [
+        ...mapActions('ads', [
             'store',
             'detail',
             'update',
         ]),
+        ...mapActions('adsgroup', [
+            'list',
+        ]),
         onSubmit() {
-            this.update({campaignId: this.$route.params.campaignId, data: this.formData})
+            this.update({adsId: this.$route.params.adsId, data: this.formData})
                 .then(data => {
-                    console.log('updated');
-                    this.$router.push({ name: 'campaign_list' })
-                }).catch(
-                    (error) => {
-                        // todo
-                    }
-                )
-        },
-        fetchDetail() {
-            this.detail(this.$route.params.campaignId)
-                .then(data => {
-                    console.log('fetched');
-                    console.log(data);
-                    data = data.data;
-                    this.formData = {
-                        ...this.formData,
-                        customerId: data.customer_id,
-                        name: data.name,
-                        budget: data.budget,
-                        advertisingChannelType: data.advertising_channel_type,
-                        status: data.status,
-                        start_date: data.start_date,
-                        end_date: data.end_date,
-                        campaignBudgetId: data.campaign_budget_id,
-                    }
+                    this.$router.push({ name: 'ads_list' })
                 }).catch(
                     (error) => {
                         // todo
@@ -119,8 +91,42 @@ export default {
                 )
         },
         onBack() {
-            this.$router.push({ name: 'campaign_list' })
-        }
+            this.$router.push({ name: 'ads_list' })
+        },
+        fetchDetail() {
+            this.detail(this.$route.params.adsId)
+                .then(res => {
+                    console.log('fetched');
+                    console.log(res);
+                    this.formData = {
+                        ...this.formData,
+                        adsGroupId: res.data.ad_group_id,
+                        name: res.data.ad_name,
+                        status: res.data.ad_group_ad_status,
+                        headline1: res.data.headlines[0]['HEADLINE_1'],
+                        headline2: res.data.headlines[1]['HEADLINE_2'],
+                        headline3: res.data.headlines[2]['HEADLINE_3'],
+                        description1: res.data.descriptions[0]['DESCRIPTION_1'],
+                        description2: res.data.descriptions[1]['DESCRIPTION_2'],
+                        url: '',
+                    }
+                }).catch(
+                    (error) => {
+                        // todo
+                    }
+                )
+        },
+        getAdsGroupList() {
+            this.list()
+                .then(data => {
+                    console.log(data)
+                    this.adsgroups = data.data;
+                }).catch(
+                    (error) => {
+                        // todo
+                    }
+                )
+        },
     }
 }
 </script>

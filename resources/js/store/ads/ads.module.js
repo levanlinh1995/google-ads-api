@@ -14,8 +14,8 @@ const ads = {
         }
       );
     },
-    detail({ commit }, campaignId) {
-      return AdsService.detail(campaignId).then(
+    detail({ commit }, adsId) {
+      return AdsService.detail(adsId).then(
         data => {
           return Promise.resolve(data);
         },
@@ -34,8 +34,8 @@ const ads = {
         }
       );
     },
-    update({ commit }, { campaignId, data }) {
-      return AdsService.update(campaignId, data).then(
+    update({ commit }, { adsId, data }) {
+      return AdsService.update(adsId, data).then(
         data => {
           return Promise.resolve(data);
         },
@@ -45,8 +45,8 @@ const ads = {
       );
     },
 
-    delete({ commit }, campaignId) {
-      return AdsService.delete(campaignId).then(
+    delete({ commit }, data) {
+      return AdsService.delete(data).then(
         data => {
           return Promise.resolve(data);
         },
