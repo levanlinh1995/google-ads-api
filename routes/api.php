@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Auth\GoogleController;
 use App\Http\Controllers\Api\Campaign\CampaignController;
 use App\Http\Controllers\Api\AdsGroup\AdsGroupController;
 use App\Http\Controllers\Api\Ads\AdsController;
+use App\Http\Controllers\Api\Account\AccessibleAccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,21 +29,22 @@ Route::get('auth/generate-google-ads-refresh-token', [GoogleController::class, '
 Route::prefix('campaigns')->middleware(['auth:sanctum'])->group(function () {
     Route::get('/', [CampaignController::class, 'index']);
     Route::post('/store', [CampaignController::class, 'store']);
-    Route::post('/update', [CampaignController::class, 'update']);
-    Route::post('/delete', [CampaignController::class, 'delete']);
+    Route::get('/detail/{campaignId}', [CampaignController::class, 'detail']);
+    Route::post('/update/{campaignId}', [CampaignController::class, 'update']);
+    Route::post('/delete/{campaignId}', [CampaignController::class, 'delete']);
 
-    //test
-    // Route::post('/store', [AdsController::class, 'index']);
 });
 
 Route::prefix('ads-groups')->middleware(['auth:sanctum'])->group(function () {
     Route::get('/', [AdsGroupController::class, 'index']);
     Route::post('/store', [AdsGroupController::class, 'store']);
+    Route::post('/delete/{adsgroupId}', [AdsGroupController::class, 'delete']);
 });
 
 Route::prefix('ads')->middleware(['auth:sanctum'])->group(function () {
     Route::get('/', [AdsController::class, 'index']);
     Route::post('/store', [AdsController::class, 'store']);
-    Route::post('/update', [AdsController::class, 'update']);
-    Route::post('/delete', [AdsController::class, 'delete']);
+    Route::post('/detail/{adsId}', [AdsController::class, 'detail']);
+    Route::post('/update/{adsId}', [AdsController::class, 'update']);
+    Route::post('/delete/{adsId}', [AdsController::class, 'delete']);
 });

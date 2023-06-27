@@ -19,6 +19,10 @@ class BaseService
             $message = $e->getMessage();
         }
 
-        throw new \Exception($message);
+        return Response::json([
+            'success' => false,
+            'message' => $message
+            // 'message' => $e->getMessage()
+        ], 400);
     }
 }

@@ -4,14 +4,14 @@
             <v-card-item>
                 <div>
                     <div class="text-h6 mb-1">
-                        Campaign List
+                        Ads Group List
                     </div>
                     <v-btn @click="onBack" color="grey-lighten-1">
                             Back to Dashboard
                         </v-btn>
                     <div class="mt-3 mb-5 text-right">
-                        <v-btn @click="onNavigateToCampaignNew" color="indigo-darken-3">
-                            Create new campaign
+                        <v-btn @click="onNavigateToAdsGroupNew" color="indigo-darken-3">
+                            Create new Ads Group
                         </v-btn>
                     </div>
                     <div>
@@ -22,6 +22,9 @@
                                         Action
                                     </th>
                                     <th class="text-left">
+                                        Ad Group
+                                    </th>
+                                    <th class="text-left">
                                         Campaign
                                     </th>
                                     <th class="text-left">
@@ -30,45 +33,20 @@
                                     <th class="text-left">
                                         Status
                                     </th>
-                                    <th class="text-left">
-                                        Budget
-                                    </th>
-                                    <th class="text-left">
-                                        Optimization Score
-                                    </th>
-                                    <th class="text-left">
-                                        Advertising Channel Type
-                                    </th>
-                                    <th class="text-left">
-                                        Start Date
-                                    </th>
-                                    <th class="text-left">
-                                        End Date
-                                    </th>
                                     
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="item in items" :key="item.id">
                                     <td class="overflow-y-auto">
-                                        <v-btn size="x-small" class="mr-2" @click="onDetailPage(item.id)">
-                                            Detail
-                                        </v-btn>
-                                        <v-btn size="x-small" class="mr-2" @click="onEditPage(item.id)">
-                                            Edit
-                                        </v-btn>
                                         <v-btn size="x-small" @click="onDelete(item)">
                                             Delete
                                         </v-btn>
                                     </td>
-                                    <td>{{ item.id }} <br/>{{ item.name }}</td>
-                                    <td>{{ item.customer_id }}<br/>{{ item.customer_descriptive_name }}</td>
-                                    <td>{{ item.status_name }}</td>
-                                    <td>{{ item.budget }}</td>
-                                    <td>{{ item.optimization_score }}</td>
-                                    <td>{{ item.advertising_channel_type_name }}</td>
-                                    <td>{{ item.start_date }}</td>
-                                    <td>{{ item.end_date }}</td>
+                                    <td>{{ item.ads_group_id }} <br/>{{ item.ads_group_name }}</td>
+                                    <td>{{ item.campaign_id }} {{ item.campaign_name }}</td>
+                                    <td>{{ item.customer_id }} <br/> {{ item.customer_descriptive_name }}</td>
+                                    <td>{{ item.ads_group_status_name }}</td>
                                 </tr>
                             </tbody>
                         </v-table>
@@ -87,15 +65,15 @@ export default {
         items: [],
     }),
     created() {
-        this.getCampaignList();
+        this.getAdsGroupList();
     },
     mounted() {},
     methods: {
-        ...mapActions('campaign', [
+        ...mapActions('adsgroup', [
             'list',
             'delete'
         ]),
-        getCampaignList() {
+        getAdsGroupList() {
             this.list()
                 .then(data => {
                     console.log(data)
@@ -106,20 +84,14 @@ export default {
                     }
                 )
         },
-        onNavigateToCampaignNew() {
-            this.$router.push({ name: 'campaign_new' })
+        onNavigateToAdsGroupNew() {
+            this.$router.push({ name: 'adsgroup_new' })
         },
-        onEditPage(campaignId) {
-            this.$router.push({ name: 'campaign_edit', params: { campaignId: campaignId } })
-        },
-        onDetailPage(campaignId) {
-            this.$router.push({ name: 'campaign_detail', params: { campaignId: campaignId } })
-        },
-        onDelete(campaign) {
-            this.delete(campaign.id)
+        onDelete(adsgroup) {
+            this.delete(adsgroup.ads_group_id)
                 .then(data => {
                     console.log('deleted')
-                    const index = this.items.indexOf(campaign)
+                    const index = this.items.indexOf(adsgroup)
                     this.items.splice(index, 1)
                 }).catch(
                     (error) => {
@@ -130,7 +102,6 @@ export default {
         onBack() {
             this.$router.push({ name: 'home' })
         }
-
     }
 }
 </script>

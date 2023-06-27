@@ -15,23 +15,28 @@ class CampaignController extends Controller
         return $campaignService->list($customerId);
     }
 
-    public function store(CampaignService $campaignService)
+    public function detail($campaignId, CampaignService $campaignService)
     {
         $customerId= 4213717333;
-        return $campaignService->store($customerId);
+        return $campaignService->detail($customerId, $campaignId);
     }
 
-    public function update(CampaignService $campaignService)
+    public function store(CampaignService $campaignService, Request $request)
     {
-        $customerId= 4213717333;
-        $campaignId = 20316601567;
-        return $campaignService->update($customerId, $campaignId);
+        $paramData = $request->all();
+        return $campaignService->store($paramData);
     }
 
-    public function delete(CampaignService $campaignService)
+    public function update($campaignId, CampaignService $campaignService, Request $request)
     {
         $customerId= 4213717333;
-        $campaignId = 20316601567;
-        return $campaignService->delete($customerId, $campaignId);
+        $paramData = $request->all();
+        return $campaignService->update($campaignId, $paramData);
+    }
+
+    public function delete($campaignId, CampaignService $campaignService)
+    {
+        $customerId= 4213717333;
+        return $campaignService->delete($customerId, (int) $campaignId);
     }
 }

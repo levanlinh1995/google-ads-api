@@ -15,11 +15,11 @@ class AdsController
         return $adsService->list($customerId, $adGroupId);
     }
 
-    public function store(AdsService $adsService)
+    public function store(AdsService $adsService, Request $request)
     {
         $customerId = 4213717333;
-        $adGroupId = 150503835053;
-        return $adsService->store($customerId, $adGroupId);
+        $paramData = $request->all();
+        return $adsService->store($customerId, $paramData);
         
     }
     

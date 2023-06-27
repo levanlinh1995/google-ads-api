@@ -4,14 +4,14 @@
             <v-card-item>
                 <div>
                     <div class="text-h6 mb-1">
-                        Campaign List
+                        Ads List
                     </div>
                     <v-btn @click="onBack" color="grey-lighten-1">
                             Back to Dashboard
                         </v-btn>
                     <div class="mt-3 mb-5 text-right">
-                        <v-btn @click="onNavigateToCampaignNew" color="indigo-darken-3">
-                            Create new campaign
+                        <v-btn @click="onNavigateToAdsNew" color="indigo-darken-3">
+                            Create new ads
                         </v-btn>
                     </div>
                     <div>
@@ -22,6 +22,12 @@
                                         Action
                                     </th>
                                     <th class="text-left">
+                                        Ad Name
+                                    </th>
+                                    <th class="text-left">
+                                        Ad Group
+                                    </th>
+                                    <th class="text-left">
                                         Campaign
                                     </th>
                                     <th class="text-left">
@@ -30,22 +36,6 @@
                                     <th class="text-left">
                                         Status
                                     </th>
-                                    <th class="text-left">
-                                        Budget
-                                    </th>
-                                    <th class="text-left">
-                                        Optimization Score
-                                    </th>
-                                    <th class="text-left">
-                                        Advertising Channel Type
-                                    </th>
-                                    <th class="text-left">
-                                        Start Date
-                                    </th>
-                                    <th class="text-left">
-                                        End Date
-                                    </th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,14 +51,11 @@
                                             Delete
                                         </v-btn>
                                     </td>
-                                    <td>{{ item.id }} <br/>{{ item.name }}</td>
-                                    <td>{{ item.customer_id }}<br/>{{ item.customer_descriptive_name }}</td>
-                                    <td>{{ item.status_name }}</td>
-                                    <td>{{ item.budget }}</td>
-                                    <td>{{ item.optimization_score }}</td>
-                                    <td>{{ item.advertising_channel_type_name }}</td>
-                                    <td>{{ item.start_date }}</td>
-                                    <td>{{ item.end_date }}</td>
+                                    <td>{{ item.ad_id }} ({{ item.ad_name }})</td>
+                                    <td>{{ item.ad_group_id }} ({{ item.ad_group_name }})</td>
+                                    <td>{{ item.campaign_id }} ({{ item.campaign_name }})</td>
+                                    <td>{{ item.account_id }} ({{ item.account_name }})</td>
+                                    <td>{{ item.ad_group_ad_status }}</td>
                                 </tr>
                             </tbody>
                         </v-table>
@@ -87,15 +74,15 @@ export default {
         items: [],
     }),
     created() {
-        this.getCampaignList();
+        this.getList();
     },
     mounted() {},
     methods: {
-        ...mapActions('campaign', [
+        ...mapActions('ads', [
             'list',
             'delete'
         ]),
-        getCampaignList() {
+        getList() {
             this.list()
                 .then(data => {
                     console.log(data)
@@ -106,20 +93,20 @@ export default {
                     }
                 )
         },
-        onNavigateToCampaignNew() {
-            this.$router.push({ name: 'campaign_new' })
+        onNavigateToAdsNew() {
+            this.$router.push({ name: 'ads_new' })
         },
-        onEditPage(campaignId) {
-            this.$router.push({ name: 'campaign_edit', params: { campaignId: campaignId } })
+        onEditPage(adsId) {
+            this.$router.push({ name: 'ads_edit', params: { adsId: adsId } })
         },
-        onDetailPage(campaignId) {
-            this.$router.push({ name: 'campaign_detail', params: { campaignId: campaignId } })
+        onDetailPage(adsId) {
+            this.$router.push({ name: 'ads_detail', params: { adsId: adsId } })
         },
-        onDelete(campaign) {
-            this.delete(campaign.id)
+        onDelete(item) {
+            this.delete(item.id)
                 .then(data => {
                     console.log('deleted')
-                    const index = this.items.indexOf(campaign)
+                    const index = this.items.indexOf(item)
                     this.items.splice(index, 1)
                 }).catch(
                     (error) => {

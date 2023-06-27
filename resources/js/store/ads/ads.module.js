@@ -1,11 +1,11 @@
-import CampaignService from '@/services/campaign/campaign.service'
+import AdsService from '@/services/ads/ads.service.js'
 
-const campaign = {
+const ads = {
   namespaced: true,
   state: {},
   actions: {
     list() {
-      return CampaignService.list().then(
+      return AdsService.list().then(
         data => {
           return Promise.resolve(data);
         },
@@ -15,7 +15,7 @@ const campaign = {
       );
     },
     detail({ commit }, campaignId) {
-      return CampaignService.detail(campaignId).then(
+      return AdsService.detail(campaignId).then(
         data => {
           return Promise.resolve(data);
         },
@@ -25,7 +25,7 @@ const campaign = {
       );
     },
     store({ commit }, data) {
-      return CampaignService.store(data).then(
+      return AdsService.store(data).then(
         data => {
           return Promise.resolve(data);
         },
@@ -35,7 +35,7 @@ const campaign = {
       );
     },
     update({ commit }, { campaignId, data }) {
-      return CampaignService.update(campaignId, data).then(
+      return AdsService.update(campaignId, data).then(
         data => {
           return Promise.resolve(data);
         },
@@ -46,7 +46,7 @@ const campaign = {
     },
 
     delete({ commit }, campaignId) {
-      return CampaignService.delete(campaignId).then(
+      return AdsService.delete(campaignId).then(
         data => {
           return Promise.resolve(data);
         },
@@ -60,4 +60,4 @@ const campaign = {
   }
 };
 
-export default campaign;
+export default ads;

@@ -40,24 +40,121 @@ class AdsService extends BaseService
         $this->googleAdsClient = $googleAdsClient;
     }
 
-    public function list($customerId, $adGroupId)
+    // public function list($customerId, $adGroupId = null)
+    // {
+    //     try {
+    //         $googleAdsServiceClient = $this->googleAdsClient->getGoogleAdsServiceClient();
+
+    //         // Creates a query that retrieves responsive search ads.
+    //         $query = "
+    //         SELECT 
+    //             ad_group_ad.ad.final_urls, 
+    //             ad_group_ad.ad.id, 
+    //             ad_group_ad.ad.name, 
+    //             ad_group_ad.ad.resource_name, 
+    //             ad_group_ad.ad.responsive_search_ad.descriptions, 
+    //             ad_group_ad.ad.responsive_search_ad.headlines, 
+    //             ad_group_ad.ad.type, 
+    //             ad_group_ad.ad_group, 
+    //             ad_group_ad.resource_name, 
+    //             ad_group_ad.status, 
+    //             campaign.advertising_channel_type, 
+    //             campaign.bidding_strategy, 
+    //             campaign.campaign_group, 
+    //             campaign.campaign_budget, 
+    //             campaign.bidding_strategy_type, 
+    //             campaign.end_date, 
+    //             campaign.id, 
+    //             campaign.listing_type, 
+    //             campaign.manual_cpa, 
+    //             campaign.name, 
+    //             campaign.optimization_score, 
+    //             campaign.resource_name, 
+    //             campaign.start_date, 
+    //             campaign.status, 
+    //             customer.currency_code, 
+    //             customer.descriptive_name, 
+    //             customer.id, 
+    //             customer.manager, 
+    //             customer.resource_name, 
+    //             customer.status, 
+    //             customer.time_zone, 
+    //             customer.test_account, 
+    //             ad_group.campaign, 
+    //             ad_group.id, 
+    //             ad_group.name, 
+    //             ad_group.resource_name, 
+    //             ad_group.status, 
+    //             ad_group.type 
+    //         FROM ad_group_ad 
+    //         WHERE ad_group_ad.ad.type = RESPONSIVE_SEARCH_AD
+    //             AND ad_group_ad.status IN ('ENABLED', 'PAUSED')
+    //         ";
+
+    //         if (!is_null($adGroupId)) {
+    //             $query .= " AND ad_group.id = $adGroupId";
+    //         }
+
+    //         // Issues a search request by specifying page size.
+    //         $response =
+    //             $googleAdsServiceClient->search($customerId, $query, ['pageSize' => self::PAGE_SIZE]);
+
+    //         // Iterates over all rows in all pages and prints the requested field values for
+    //         // the responsive search ad in each row.
+    //         $data = [];
+    //         foreach ($response->iterateAllElements() as $googleAdsRow) {
+    //             $ad = $googleAdsRow->getAdGroupAd()->getAd();
+    //             $adGroupAd = $googleAdsRow->getAdGroupAd();
+    //             $adGroup = $googleAdsRow->getAdGroup();
+    //             $campaign = $googleAdsRow->getCampaign();
+    //             $customer = $googleAdsRow->getCustomer();
+    //             $responsiveSearchAdInfo = $ad->getResponsiveSearchAd();
+
+    //             $data[] = [
+    //                 'ad_resource_name' => $ad->getResourceName(),
+    //                 'ad_id' => $ad->getId(),
+    //                 'ad_name' => $ad->getName(),
+    //                 'ad_group_ad_status' => AdGroupAdStatus::name($adGroupAd->getStatus()),
+    //                 'headlines' => $responsiveSearchAdInfo->getHeadlines(),
+    //                 'descriptions' => $responsiveSearchAdInfo->getDescriptions(),
+    //                 'account_id' => $customer->getId(),
+    //                 'account_name' => $customer->getDescriptiveName(),
+    //                 'campaign_id' => $campaign->getId(),
+    //                 'campaign_name' => $campaign->getName(),
+    //                 'ad_group_id' => $adGroup->getId(),
+    //                 'ad_group_name' => $adGroup->getName(),
+    //             ];
+    //         }
+
+    //         return Response::json([
+    //             'success' => true,
+    //             'data' => $data,
+    //         ]);
+            
+    //     } catch (Exception $e) {
+    //         return $this->handleGoogleAdsExeption($e);
+    //     }
+    // }
+
+    public function list($customerId, $adGroupId = null)
     {
         try {
             $googleAdsServiceClient = $this->googleAdsClient->getGoogleAdsServiceClient();
 
             // Creates a query that retrieves responsive search ads.
-                $query =
-                'SELECT ad_group.id, '
-                . 'ad_group_ad.ad.id, '
-                . 'ad_group_ad.ad.responsive_search_ad.headlines, '
-                . 'ad_group_ad.ad.responsive_search_ad.descriptions, '
-                . 'ad_group_ad.status '
-                . 'FROM ad_group_ad '
-                . 'WHERE ad_group_ad.ad.type = RESPONSIVE_SEARCH_AD '
-                . 'AND ad_group_ad.status != "REMOVED"';
-            if (!is_null($adGroupId)) {
-                $query .= " AND ad_group.id = $adGroupId";
-            }
+            $query =
+            'SELECT ad_group.id, '
+            . 'ad_group_ad.ad.name, '
+            . 'ad_group_ad.ad.id, '
+            . 'ad_group_ad.ad.responsive_search_ad.headlines, '
+            . 'ad_group_ad.ad.responsive_search_ad.descriptions, '
+            . 'ad_group_ad.status '
+            . 'FROM ad_group_ad '
+            . 'WHERE ad_group_ad.ad.type = RESPONSIVE_SEARCH_AD '
+            . 'AND ad_group_ad.status != "REMOVED"';
+        if (!is_null($adGroupId)) {
+            $query .= " AND ad_group.id = $adGroupId";
+        }
 
             // Issues a search request by specifying page size.
             $response =
@@ -65,25 +162,30 @@ class AdsService extends BaseService
 
             // Iterates over all rows in all pages and prints the requested field values for
             // the responsive search ad in each row.
-            $isEmptyResult = true;
             $data = [];
             foreach ($response->iterateAllElements() as $googleAdsRow) {
-                $isEmptyResult = false;
                 $ad = $googleAdsRow->getAdGroupAd()->getAd();
+                $adGroupAd = $googleAdsRow->getAdGroupAd();
+                $adGroup = $googleAdsRow->getAdGroup();
+                $campaign = $googleAdsRow->getCampaign();
+                $customer = $googleAdsRow->getCustomer();
                 $responsiveSearchAdInfo = $ad->getResponsiveSearchAd();
 
                 $data[] = [
-                    'resourceName' => $ad->getResourceName(),
-                    'status' => AdGroupAdStatus::name($googleAdsRow->getAdGroupAd()->getStatus()),
-                    'headlines' => $responsiveSearchAdInfo->getHeadlines(),
-                    'descriptions' => $responsiveSearchAdInfo->getDescriptions()
-
+                    'ad_resource_name' => $ad->getResourceName(),
+                    'ad_id' => $ad->getId(),
+                    'ad_name' => $ad->getName(),
+                    // 'ad_group_ad_status' => AdGroupAdStatus::name($adGroupAd->getStatus()),
+                    // 'headlines' => $responsiveSearchAdInfo->getHeadlines(),
+                    // 'descriptions' => $responsiveSearchAdInfo->getDescriptions(),
+                    // 'account_id' => $customer->getId(),
+                    // 'account_name' => $customer->getDescriptiveName(),
+                    // 'campaign_id' => $campaign->getId(),
+                    // 'campaign_name' => $campaign->getName(),
+                    // 'ad_group_id' => $adGroup->getId(),
+                    // 'ad_group_name' => $adGroup->getName(),
                 ];
             }
-
-            // if ($isEmptyResult) {
-            //     print 'No responsive search ads were found.' . PHP_EOL;
-            // }
 
             return Response::json([
                 'success' => true,
@@ -91,41 +193,53 @@ class AdsService extends BaseService
             ]);
             
         } catch (Exception $e) {
-            $this->handleGoogleAdsExeption($e);
+            return $this->handleGoogleAdsExeption($e);
         }
     }
 
-    public function store($customerId, $adsGroupId)
+    public function store($customerId, $paramData)
     {
+        $adsGroupId = (int) $paramData['adsGroupId'];
+        $name = $paramData['name'];
+        $status = (int) $paramData['status'];
+        $headline1 = $paramData['headline1'];
+        $headline2 = $paramData['headline2'];
+        $headline3 = $paramData['headline3'];
+        $description1 = $paramData['description1'];
+        $description2 = $paramData['description2'];
+        $url = $paramData['url'];
+
         try {
             // Creates an ad and sets responsive search ad info.
             $ad = new Ad([
+                'name' => $name,
                 'responsive_search_ad' => new ResponsiveSearchAdInfo([
                     'headlines' => [
                         // Sets a pinning to always choose this asset for HEADLINE_1. Pinning is
                         // optional; if no pinning is set, then headlines and descriptions will be
                         // rotated and the ones that perform best will be used more often.
                         self::createAdTextAsset(
-                            'Cruise to Mars #' . (new DateTime())->format("mdHisv"),
+                            $headline1,
                             ServedAssetFieldType::HEADLINE_1
                         ),
-                        self::createAdTextAsset('Best Space Cruise Line'),
-                        self::createAdTextAsset('Experience the Stars')
+                        self::createAdTextAsset($headline2),
+                        self::createAdTextAsset($headline3)
                     ],
                     'descriptions' => [
-                        self::createAdTextAsset('Buy your tickets now'),
-                        self::createAdTextAsset('Visit the Red Planet')
+                        self::createAdTextAsset($description1),
+                        self::createAdTextAsset($description2)
                     ],
                     'path1' => 'all-inclusive',
                     'path2' => 'deals'
                 ]),
-                'final_urls' => ['http://www.example.com']
+                'final_urls' => [$url]
+                // 'final_urls' => ['http://www.example.com']
             ]);
 
             // Creates an ad group ad to hold the above ad.
             $adGroupAd = new AdGroupAd([
                 'ad_group' => ResourceNames::forAdGroup($customerId, $adsGroupId),
-                'status' => AdGroupAdStatus::PAUSED,
+                'status' => $status,
                 'ad' => $ad
             ]);
 
@@ -145,7 +259,7 @@ class AdsService extends BaseService
             ]);
             
         } catch (Exception $e) {
-            $this->handleGoogleAdsExeption($e);
+            return $this->handleGoogleAdsExeption($e);
         }
     }
     
@@ -196,7 +310,7 @@ class AdsService extends BaseService
             
             
         } catch (Exception $e) {
-            $this->handleGoogleAdsExeption($e);
+            return $this->handleGoogleAdsExeption($e);
         }
     }
 
@@ -225,7 +339,7 @@ class AdsService extends BaseService
                 'message' => "Removed ad group ad with resource name " . $removedAdGroupAd->getResourceName()
             ]);
         } catch (Exception $e) {
-            $this->handleGoogleAdsExeption($e);
+            return $this->handleGoogleAdsExeption($e);
         }
     }
 
