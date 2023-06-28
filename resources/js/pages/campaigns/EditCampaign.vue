@@ -14,7 +14,6 @@
                     <div class="mt-7">
                         <v-sheet width="400" class="mx-auto">
                             <form @submit.prevent="onSubmit">
-                                <v-text-field required type="number" v-model="formData.customerId" label="Customer ID"></v-text-field>
                                 <v-text-field required v-model="formData.name" label="Name"></v-text-field>
                                 <v-text-field required type="number" v-model="formData.budget" label="Budget"></v-text-field>
                                 <v-select disabled required v-model="formData.advertisingChannelType" item-title="name" item-value="value" label="Channel type" :items="advertisingChannelType"></v-select>
@@ -40,7 +39,6 @@ export default {
     data() {
         return {
             formData: {
-                customerId: '',
                 name: '',
                 budget: '',
                 advertisingChannelType: null,
@@ -103,7 +101,6 @@ export default {
                     data = data.data;
                     this.formData = {
                         ...this.formData,
-                        customerId: data.customer_id,
                         name: data.name,
                         budget: data.budget,
                         advertisingChannelType: data.advertising_channel_type,

@@ -245,7 +245,7 @@ class AdsService extends BaseService
 
     public function store($customerId, $paramData)
     {
-        $adsGroupId = (int) $paramData['adsGroupId'];
+        $adsGroupId = $paramData['adsGroupId'];
         $name = $paramData['name'];
         $status = (int) $paramData['status'];
         $headline1 = $paramData['headline1'];

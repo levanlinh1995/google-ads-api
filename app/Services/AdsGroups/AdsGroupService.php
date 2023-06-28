@@ -117,9 +117,8 @@ class AdsGroupService extends BaseService
         }
     }
 
-    public function store($paramData)
+    public function store($customerId, $paramData)
     {
-        $customerId = (int) $paramData['customerId'];
         $campaignId = (int) $paramData['campaignId'];
         $name = $paramData['name'];
         $status = (int) $paramData['status'];

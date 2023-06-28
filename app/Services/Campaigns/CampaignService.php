@@ -226,9 +226,8 @@ class CampaignService extends BaseService
         }
     }
 
-    public function store($paramData)
+    public function store($customerId, $paramData)
     {
-        $customerId = (int) $paramData['customerId'];
         $name = $paramData['name'];
         $startDate = $paramData['start_date'];
         $endDate = $paramData['end_date'];
@@ -285,9 +284,8 @@ class CampaignService extends BaseService
         }
     }
 
-    public function update($campaignId, $paramData)
+    public function update($customerId, $campaignId, $paramData)
     {
-        $customerId = (int) $paramData['customerId'];
         $name = $paramData['name'];
         $startDate = $paramData['start_date'];
         $endDate = $paramData['end_date'];

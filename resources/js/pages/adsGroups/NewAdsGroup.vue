@@ -14,7 +14,6 @@
                     <div class="mt-7">
                         <v-sheet width="400" class="mx-auto">
                             <form @submit.prevent="onSubmit">
-                                <v-text-field required type="number" v-model="formData.customerId" label="Customer ID"></v-text-field>
                                 <v-text-field required v-model="formData.name" label="Name"></v-text-field>
                                 <v-select required v-model="formData.campaignId" item-title="name" item-value="id" label="Select Campaign" :items="campaigns"></v-select>
                                 <v-select required v-model="formData.status" item-title="name" item-value="value" label="Status" :items="status"></v-select>
@@ -37,7 +36,6 @@ export default {
     data() {
         return {
             formData: {
-                customerId: '',
                 campaignId: null,
                 name: '',
                 status: null,

@@ -24,13 +24,15 @@ class CampaignController extends Controller
     public function store(CampaignService $campaignService, Request $request)
     {
         $paramData = $request->all();
-        return $campaignService->store($paramData);
+        $customerId= config('google_ads.customerId');
+        return $campaignService->store($customerId, $paramData);
     }
 
     public function update($campaignId, CampaignService $campaignService, Request $request)
     {
         $paramData = $request->all();
-        return $campaignService->update($campaignId, $paramData);
+        $customerId= config('google_ads.customerId');
+        return $campaignService->update($customerId, $campaignId, $paramData);
     }
 
     public function delete($campaignId, CampaignService $campaignService)

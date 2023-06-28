@@ -17,7 +17,8 @@ class AdsGroupController extends Controller
     public function store(AdsGroupService $adsGroupService, Request $request)
     {
         $paramData = $request->all();
-        return $adsGroupService->store($paramData);
+        $customerId= config('google_ads.customerId');
+        return $adsGroupService->store($customerId, $paramData);
     }
 
     public function delete($adGroupId, AdsGroupService $adsGroupService)
