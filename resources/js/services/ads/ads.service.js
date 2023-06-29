@@ -25,7 +25,7 @@ class AdsService {
   
     update(adsId, data) {
       return axios
-          .post(`ads/update/${adsId}`, data)
+          .put(`ads/update/${adsId}`, data)
             .then(response => {
                 return response.data
             })
@@ -33,7 +33,7 @@ class AdsService {
   
     delete({adGroupId, adId}) {
       return axios
-          .post(`ads/delete/${adGroupId}/${adId}`)
+          .delete(`ads/delete/${adGroupId}/${adId}`)
             .then(response => {
                 return response.data
             })

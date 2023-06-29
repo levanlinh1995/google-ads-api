@@ -25,7 +25,7 @@ class CampaignService {
 
   update(campaignId, data) {
     return axios
-        .post(`campaigns/update/${campaignId}`, data)
+        .put(`campaigns/update/${campaignId}`, data)
           .then(response => {
               return response.data
           })
@@ -33,7 +33,7 @@ class CampaignService {
 
   delete(campaignId) {
     return axios
-        .post(`campaigns/delete/${campaignId}`)
+        .delete(`campaigns/delete/${campaignId}`)
           .then(response => {
               return response.data
           })

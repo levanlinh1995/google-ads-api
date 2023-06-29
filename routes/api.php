@@ -30,21 +30,21 @@ Route::prefix('campaigns')->middleware(['auth:sanctum'])->group(function () {
     Route::get('/', [CampaignController::class, 'index']);
     Route::post('/store', [CampaignController::class, 'store']);
     Route::get('/detail/{campaignId}', [CampaignController::class, 'detail']);
-    Route::post('/update/{campaignId}', [CampaignController::class, 'update']);
-    Route::post('/delete/{campaignId}', [CampaignController::class, 'delete']);
+    Route::put('/update/{campaignId}', [CampaignController::class, 'update']);
+    Route::delete('/delete/{campaignId}', [CampaignController::class, 'delete']);
 
 });
 
 Route::prefix('ads-groups')->middleware(['auth:sanctum'])->group(function () {
     Route::get('/', [AdsGroupController::class, 'index']);
     Route::post('/store', [AdsGroupController::class, 'store']);
-    Route::post('/delete/{adsgroupId}', [AdsGroupController::class, 'delete']);
+    Route::delete('/delete/{adsgroupId}', [AdsGroupController::class, 'delete']);
 });
 
 Route::prefix('ads')->middleware(['auth:sanctum'])->group(function () {
     Route::get('/', [AdsController::class, 'index']);
     Route::post('/store', [AdsController::class, 'store']);
     Route::get('/detail/{adsId}', [AdsController::class, 'detail']);
-    Route::post('/update/{adsId}', [AdsController::class, 'update']);
-    Route::post('/delete/{adsGroupId}/{adsId}', [AdsController::class, 'delete']);
+    Route::put('/update/{adsId}', [AdsController::class, 'update']);
+    Route::delete('/delete/{adsGroupId}/{adsId}', [AdsController::class, 'delete']);
 });

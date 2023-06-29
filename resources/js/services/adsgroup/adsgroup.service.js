@@ -17,7 +17,7 @@ class AdsGroupService {
 
     delete(adsgroupId) {
       return axios
-          .post(`ads-groups/delete/${adsgroupId}`)
+          .delete(`ads-groups/delete/${adsgroupId}`)
             .then(response => {
                 return response.data
             })
